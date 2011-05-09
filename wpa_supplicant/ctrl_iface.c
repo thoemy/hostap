@@ -5006,6 +5006,16 @@ static void wpa_supplicant_ctrl_iface_flush(struct wpa_supplicant *wpa_s)
 	wpa_supplicant_ctrl_iface_remove_cred(wpa_s, "all");
 }
 
+static int wpa_supplicant_driver_cmd(struct wpa_supplicant *wpa_s, char *cmd,
+				     char *buf, size_t buflen)
+{
+	int ret;
+
+	ret = wpa_drv_driver_cmd(wpa_s, cmd, buf, buflen);
+	if (ret == 0)
+		ret = sprintf(buf, "%s\n", "OK");
+	return ret;
+}
 
 char * wpa_supplicant_ctrl_iface_process(struct wpa_supplicant *wpa_s,
 					 char *buf, size_t *resp_len)
@@ -5534,6 +5544,9 @@ char * wpa_supplicant_ctrl_iface_process(struct wpa_supplicant *wpa_s,
 #endif /* CONFIG_WNM */
 	} else if (os_strcmp(buf, "FLUSH") == 0) {
 		wpa_supplicant_ctrl_iface_flush(wpa_s);
+	} else if (os_strncmp(buf, "DRIVER ", 7) == 0) {
+		reply_len = wpa_supplicant_driver_cmd(wpa_s, buf + 7, reply,
+						      reply_size);
 	} else {
 		os_memcpy(reply, "UNKNOWN COMMAND\n", 16);
 		reply_len = 16;
