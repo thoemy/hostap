@@ -1518,7 +1518,7 @@ OBJS += src/eap_peer/eap_proxy_$(CONFIG_EAP_PROXY).c
 include $(LOCAL_PATH)/eap_proxy_$(CONFIG_EAP_PROXY).mk
 endif
 ifeq ($(CONFIG_TLS), openssl)
-LOCAL_SHARED_LIBRARIES += libcrypto libssl
+LOCAL_SHARED_LIBRARIES += libcrypto libssl libkeystore_binder
 endif
 ifdef CONFIG_DRIVER_NL80211
 LOCAL_STATIC_LIBRARIES += libnl_2
