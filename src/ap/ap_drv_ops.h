@@ -217,4 +217,12 @@ static inline void hostapd_drv_poll_client(struct hostapd_data *hapd,
 	hapd->driver->poll_client(hapd->drv_priv, own_addr, addr, qos);
 }
 
+static inline int hostapd_drv_shared_ap_freq(struct hostapd_data *hapd,
+					     struct wpa_channel_info *info)
+{
+	if (hapd->driver == NULL || hapd->driver->shared_ap_freq == NULL)
+		return -1;
+	return hapd->driver->shared_ap_freq(hapd->drv_priv, info);
+}
+
 #endif /* AP_DRV_OPS */
