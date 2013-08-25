@@ -523,6 +523,8 @@ struct hostapd_config {
 
 	int *acs_blacklist;
 	int *acs_whitelist;
+
+	int ap_channel_sync;
 };
 
 
