@@ -2627,6 +2627,7 @@ static int wpa_driver_nl80211_set_country(void *priv, const char *alpha2_arg)
 	if (send_and_recv_msgs(drv, msg, NULL, NULL))
 		return -EINVAL;
 
+        return 0;
 	/* Validate coutry setting and retry up to 3 times if not match */
 	for (count = 0; count < 3; count++) {
 		os_memset(alpha2_res, 0, sizeof(alpha2));
